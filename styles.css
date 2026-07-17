@@ -290,7 +290,16 @@ a {
   margin: 0;
   font-size: clamp(0.82rem, 2.8vw, 0.92rem);
   font-weight: 800;
-  color: #c4892a;
+  color: #fffef8;
+  text-shadow:
+    -1px -1px 0 var(--ink-deep),
+     1px -1px 0 var(--ink-deep),
+    -1px  1px 0 var(--ink-deep),
+     1px  1px 0 var(--ink-deep),
+    -1.5px  0 0 var(--ink-deep),
+     1.5px  0 0 var(--ink-deep),
+     0 -1.5px 0 var(--ink-deep),
+     0  1.5px 0 var(--ink-deep);
 }
 
 .stars {
