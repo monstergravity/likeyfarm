@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Likey Farm — Cow Animations</title>
+  <style>
+    :root {
+      --bg: #e8f3ea;
+      --ink: #1f3d36;
+      --card: #fff8ea;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font-family: "Nunito", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 50% 0%, #fff6d6 0%, transparent 55%),
+        linear-gradient(180deg, #cfe9f5 0%, var(--bg) 45%, #b7d9a8 100%);
+    }
+    header {
+      padding: 1.25rem 1.25rem 0.5rem;
+      text-align: center;
+    }
+    h1 { margin: 0; font-size: 1.35rem; }
+    p.sub { margin: 0.4rem 0 0; opacity: 0.7; font-size: 0.9rem; }
+
+    .stage-wrap {
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      min-height: 52vh;
+    }
+    .stage {
+      position: relative;
+      width: min(320px, 78vw);
+      height: min(360px, 70vw);
+      display: grid;
+      place-items: end center;
+    }
+    .stage img {
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+      transform-origin: 50% 90%;
+      will-change: transform, opacity;
+      user-select: none;
+      pointer-events: none;
+    }
+    .stage img.is-hidden { display: none; }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      justify-content: center;
+      padding: 0.5rem 1rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.65rem 1rem;
+      background: var(--card);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 0.92rem;
+      box-shadow: 0 3px 0 rgba(31,61,54,0.12);
+      cursor: pointer;
+    }
+    button.active {
+      background: #1a6d67;
+      color: #fff;
+    }
+    button:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(31,61,54,0.12); }
+
+    /* skill01 blink — slight body dip */
+    .anim-blink { animation: cow-blink 4s ease-in-out infinite; }
+    @keyframes cow-blink {
+      0%, 88%, 100% { transform: translateY(0) rotate(0deg); }
+      90% { transform: translateY(2px) rotate(-1.2deg); }
+      93% { transform: translateY(1px) rotate(1deg); }
+      96% { transform: translateY(0) rotate(0deg); }
+    }
+
+    /* skill02 breathe */
+    .anim-breathe { animation: cow-breathe 3s ease-in-out infinite; }
+    @keyframes cow-breathe {
+      0%, 100% { transform: translateY(0) scale(1, 1); }
+      50% { transform: translateY(-8px) scale(1.02, 1.035); }
+    }
+
+    /* skill03 jump */
+    .anim-jump { animation: cow-jump 1.2s cubic-bezier(.2,.8,.2,1) infinite; }
+    @keyframes cow-jump {
+      0% { transform: translateY(0) scale(1, 1) rotate(0); }
+      12% { transform: translateY(6px) scale(1.12, 0.78); }
+      28% { transform: translateY(-72px) scale(0.92, 1.1) rotate(-4deg); }
+      45% { transform: translateY(-88px) scale(0.96, 1.04) rotate(3deg); }
+      65% { transform: translateY(-10px) scale(1.08, 0.88); }
+      80% { transform: translateY(0) scale(0.98, 1.05); }
+      100% { transform: translateY(0) scale(1, 1) rotate(0); }
+    }
+
+    /* skill05 sleep */
+    .anim-sleep { animation: cow-sleep 4s ease-in-out infinite; }
+    @keyframes cow-sleep {
+      0%, 100% { transform: translateY(0) rotate(-2deg) scale(1, 1); }
+      50% { transform: translateY(-4px) rotate(2deg) scale(1.02, 0.98); }
+    }
+
+    /* skill06 drink water */
+    .anim-drink-water { animation: cow-drink 2s ease-in-out infinite; }
+    @keyframes cow-drink {
+      0%, 100% { transform: translateY(0) rotate(0) scale(1); }
+      25% { transform: translateY(-4px) rotate(-6deg) scale(1.01); }
+      45% { transform: translateY(-2px) rotate(-10deg) scale(1.02); }
+      55% { transform: translateY(0) rotate(-10deg) scale(0.99); }
+      75% { transform: translateY(-3px) rotate(-3deg) scale(1.01); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stage img { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>小牛动画 · Cow Motions</h1>
+    <p class="sub">按 animation/skill01–06：眨眼 · 呼吸 · 跳跃 · 睡觉 · 喝水</p>
+  </header>
+
+  <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <img id="sprite" src="assets/animals/cow/transparent/cow-breathe.png" alt="Likey Farm cow" />
+    </div>
+  </div>
+
+  <div class="controls" id="controls">
+    <button data-anim="blink" data-src="assets/animals/cow/transparent/cow-blink.png">眨眼</button>
+    <button data-anim="breathe" data-src="assets/animals/cow/transparent/cow-breathe.png" class="active">呼吸</button>
+    <button data-anim="jump" data-src="assets/animals/cow/transparent/cow-jump.png">跳跃</button>
+    <button data-anim="sleep" data-src="assets/animals/cow/transparent/cow-sleep.png">睡觉</button>
+    <button data-anim="drink-water" data-src="assets/animals/cow/transparent/cow-drink-water.png">喝水</button>
+  </div>
+
+  <script>
+    const sprite = document.getElementById('sprite');
+    const controls = document.getElementById('controls');
+    const animClass = (name) => `anim-${name}`;
+
+    function play(btn) {
+      controls.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const anim = btn.dataset.anim;
+      const src = btn.dataset.src;
+      sprite.className = '';
+      // restart animation cleanly
+      void sprite.offsetWidth;
+      sprite.src = src;
+      sprite.classList.add(animClass(anim));
+    }
+
+    controls.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      play(btn);
+    });
+
+    play(controls.querySelector('[data-anim="breathe"]'));
+  </script>
+</body>
+</html>
